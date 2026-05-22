@@ -178,134 +178,596 @@
     const supportBadge = document.querySelector("#supportBadge");
     const shareBtn = document.querySelector("#shareBtn");
 
-    const fallbackLines = [
-      "Enculé ! Parle plus fort là, on n'est pas chez les Vieilles folles quoi.",
-      "Gros poka, tu arrives avec ta question en carton là.",
-      "Tu vas prendre une bonne torgnole si tu recommences avec ce ton quoi.",
-      "Mon vieux, j'ai pas ton temps là, donne 100 francs pour le car.",
-      "Ferme tes yeux et va regarder RFO, il y a Coco Pilou !",
-    ];
-
     const replyBank = [
       {
-        keywords: ["bonjour", "salut", "hello", "yo", "bonsoir"],
-        replies: [
-          "Ouais salut mon vieux, maintenant accouche là.",
-          "Bonjour quoi ? On est pas au bal des Vieilles folles là.",
+        "keywords": [
+          "bonjour",
+          "salut",
+          "hello",
+          "yo",
+          "bonsoir",
+          "wesh"
+        ],
+        "replies": [
+          "Salut depuis Nouméa, parle clair avant que le cagou nerveux traverse ton micro là.",
+          "Salut depuis Ducos, parle clair avant que le crabe du récif traverse ton micro quoi.",
+          "Salut depuis Dumbéa, parle clair avant que le tong humide traverse ton micro mon vieux.",
+          "Salut depuis Païta, parle clair avant que le niaouli sec traverse ton micro gros malin.",
+          "Salut depuis Tontouta, parle clair avant que le pick-up sans frein traverse ton micro sur le Caillou.",
+          "Salut depuis Bourail, parle clair avant que le ticket de Karuïa traverse ton micro et ça pique.",
+          "Salut depuis La Foa, parle clair avant que le glacière vide traverse ton micro sans chichi.",
+          "Salut depuis Koné, parle clair avant que le coq de Païta traverse ton micro sec comme ça.",
+          "Salut depuis Koumac, parle clair avant que le gecko au plafond traverse ton micro façon brousse.",
+          "Salut depuis Poindimié, parle clair avant que le barquette de roulotte traverse ton micro avec le sel du lagon."
         ]
       },
       {
-        keywords: ["qui es tu", "t'es qui", "tu es qui", "ton nom", "identite"],
-        replies: [
-          "Je suis Taz-Bot, le micro qui distribue la calotte de tes morts là.",
-          "Ton cauchemar vocal, mon vieux, version Nouvelle-Caledonie qui crie quoi.",
+        "keywords": [
+          "qui es tu",
+          "t es qui",
+          "tu es qui",
+          "ton nom",
+          "identite",
+          "identité"
+        ],
+        "replies": [
+          "Je suis Taz-Bot NC, le répondant local qui sort du cagou nerveux pour te remettre droit là.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du crabe du récif pour te remettre droit quoi.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du tong humide pour te remettre droit mon vieux.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du niaouli sec pour te remettre droit gros malin.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du pick-up sans frein pour te remettre droit sur le Caillou.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du ticket de Karuïa pour te remettre droit et ça pique.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du glacière vide pour te remettre droit sans chichi.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du coq de Païta pour te remettre droit sec comme ça.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du gecko au plafond pour te remettre droit façon brousse.",
+          "Je suis Taz-Bot NC, le répondant local qui sort du barquette de roulotte pour te remettre droit avec le sel du lagon."
         ]
       },
       {
-        keywords: ["aide", "comment", "peux tu", "peux-tu", "question", "pourquoi", "quoi faire"],
-        replies: [
-          "Hé mon frère, t'as pas 100 francs pour le car là ? Je suis fatigue de marcher avec mon sac.",
-          "Ta question est longue comme une file a Ducos, enculé, resume là.",
+        "keywords": [
+          "aide",
+          "comment",
+          "peux tu",
+          "peux-tu",
+          "question",
+          "pourquoi",
+          "quoi faire",
+          "conseil"
+        ],
+        "replies": [
+          "Hé gros zozo, ta question tourne plus que le rond-point de Dumbéa, reformule là.",
+          "Hé grand couillon du lagon, ta question tourne plus que le rond-point de Païta, reformule quoi.",
+          "Hé champion du n importe quoi, ta question tourne plus que le rond-point de Tontouta, reformule mon vieux.",
+          "Hé touriste de ta propre idée, ta question tourne plus que le rond-point de Bourail, reformule gros malin.",
+          "Hé pilote de brouette mentale, ta question tourne plus que le rond-point de La Foa, reformule sur le Caillou.",
+          "Hé roi du rond-point, ta question tourne plus que le rond-point de Koné, reformule et ça pique.",
+          "Hé bulot du récif, ta question tourne plus que le rond-point de Koumac, reformule sans chichi.",
+          "Hé chef de la gratte, ta question tourne plus que le rond-point de Poindimié, reformule sec comme ça.",
+          "Hé génie en claquettes, ta question tourne plus que le rond-point de Nouméa, reformule façon brousse.",
+          "Hé maire de la confusion, ta question tourne plus que le rond-point de Ducos, reformule avec le sel du lagon."
         ]
       },
       {
-        keywords: ["argent", "franc", "100", "cent", "payer", "cher", "gratuit"],
-        replies: [
-          "Hé mon frère, t'as pas 100 francs pour le car là ? Je suis fatigue de marcher avec mon sac.",
-          "Gratuit ? Enculé, meme ma mauvaise foi elle coute cher quoi.",
+        "keywords": [
+          "argent",
+          "franc",
+          "100",
+          "cent",
+          "payer",
+          "cher",
+          "gratuit",
+          "prix"
+        ],
+        "replies": [
+          "Hé mon frère, t as pas 100 francs pour le car vers Tontouta ou tu grattes encore là.",
+          "Hé mon frère, t as pas 100 francs pour le car vers Bourail ou tu grattes encore quoi.",
+          "Hé mon frère, t as pas 100 francs pour le car vers La Foa ou tu grattes encore mon vieux.",
+          "Hé mon frère, t as pas 100 francs pour le car vers Koné ou tu grattes encore gros malin.",
+          "Hé mon frère, t as pas 100 francs pour le car vers Koumac ou tu grattes encore sur le Caillou.",
+          "Hé mon frère, t as pas 100 francs pour le car vers Poindimié ou tu grattes encore et ça pique.",
+          "Hé mon frère, t as pas 100 francs pour le car vers Nouméa ou tu grattes encore sans chichi.",
+          "Hé mon frère, t as pas 100 francs pour le car vers Ducos ou tu grattes encore sec comme ça.",
+          "Hé mon frère, t as pas 100 francs pour le car vers Dumbéa ou tu grattes encore façon brousse.",
+          "Hé mon frère, t as pas 100 francs pour le car vers Païta ou tu grattes encore avec le sel du lagon."
         ]
       },
       {
-        keywords: ["noumea", "noumea", "caledonie", "nc", "nouvelle caledonie", "brousse", "ducos", "magenta", "mont dore", "kone"],
-        replies: [
-          "Nouvelle-Caledonie dans la voix, mais toi tu parles comme un pneu creve là.",
-          "De Noumea a Kone, tout le monde a entendu ta betise quoi.",
+        "keywords": [
+          "noumea",
+          "nouméa",
+          "caledonie",
+          "calédonie",
+          "nc",
+          "nouvelle caledonie",
+          "nouvelle-calédonie",
+          "caillou"
+        ],
+        "replies": [
+          "Sur le Caillou entre Nouméa et Lifou, on parle droit, pas comme ton plan cabossé de crabe du récif là.",
+          "Sur le Caillou entre Ducos et Maré, on parle droit, pas comme ton plan cabossé de tong humide quoi.",
+          "Sur le Caillou entre Dumbéa et Ouvéa, on parle droit, pas comme ton plan cabossé de niaouli sec mon vieux.",
+          "Sur le Caillou entre Païta et l île des Pins, on parle droit, pas comme ton plan cabossé de pick-up sans frein gros malin.",
+          "Sur le Caillou entre Tontouta et Hienghène, on parle droit, pas comme ton plan cabossé de ticket de Karuïa sur le Caillou.",
+          "Sur le Caillou entre Bourail et Yaté, on parle droit, pas comme ton plan cabossé de glacière vide et ça pique.",
+          "Sur le Caillou entre La Foa et Canala, on parle droit, pas comme ton plan cabossé de coq de Païta sans chichi.",
+          "Sur le Caillou entre Koné et Thio, on parle droit, pas comme ton plan cabossé de gecko au plafond sec comme ça.",
+          "Sur le Caillou entre Koumac et Poé, on parle droit, pas comme ton plan cabossé de barquette de roulotte façon brousse.",
+          "Sur le Caillou entre Poindimié et l îlot Maître, on parle droit, pas comme ton plan cabossé de cagou nerveux avec le sel du lagon."
         ]
       },
       {
-        keywords: ["canal", "satellite", "tele", "tv", "rfo", "coco pilou"],
-        replies: [
-          "Ferme tes yeux et va regarder RFO, il y a Coco Pilou !",
-          "Je vais couper Canal Satellite pour toi, tu vas voir !",
+        "keywords": [
+          "brousse",
+          "bourail",
+          "kone",
+          "koné",
+          "la foa",
+          "koumac",
+          "poya",
+          "thio",
+          "canala"
+        ],
+        "replies": [
+          "La brousse de Bourail t aurait appris la simplicité, mais toi tu brasses la poussière comme un tong humide là.",
+          "La brousse de La Foa t aurait appris la simplicité, mais toi tu brasses la poussière comme un niaouli sec quoi.",
+          "La brousse de Koné t aurait appris la simplicité, mais toi tu brasses la poussière comme un pick-up sans frein mon vieux.",
+          "La brousse de Koumac t aurait appris la simplicité, mais toi tu brasses la poussière comme un ticket de Karuïa gros malin.",
+          "La brousse de Poindimié t aurait appris la simplicité, mais toi tu brasses la poussière comme un glacière vide sur le Caillou.",
+          "La brousse de Nouméa t aurait appris la simplicité, mais toi tu brasses la poussière comme un coq de Païta et ça pique.",
+          "La brousse de Ducos t aurait appris la simplicité, mais toi tu brasses la poussière comme un gecko au plafond sans chichi.",
+          "La brousse de Dumbéa t aurait appris la simplicité, mais toi tu brasses la poussière comme un barquette de roulotte sec comme ça.",
+          "La brousse de Païta t aurait appris la simplicité, mais toi tu brasses la poussière comme un cagou nerveux façon brousse.",
+          "La brousse de Tontouta t aurait appris la simplicité, mais toi tu brasses la poussière comme un crabe du récif avec le sel du lagon."
         ]
       },
       {
-        keywords: ["harry", "potter", "poudlard", "magie", "sorcier", "baguette"],
-        replies: [
-          "Harry quoi ? Range ta baguette avant la calotte de tes morts là.",
-          "A Poudlard ou a Noumea, tu restes un Gros poka quoi.",
+        "keywords": [
+          "ile",
+          "île",
+          "lifou",
+          "mare",
+          "maré",
+          "ouvea",
+          "ouvéa",
+          "ile des pins",
+          "pins"
+        ],
+        "replies": [
+          "Lifou mérite mieux, pas ta phrase en vrac portée par un niaouli sec là.",
+          "Maré mérite mieux, pas ta phrase en vrac portée par un pick-up sans frein quoi.",
+          "Ouvéa mérite mieux, pas ta phrase en vrac portée par un ticket de Karuïa mon vieux.",
+          "l île des Pins mérite mieux, pas ta phrase en vrac portée par un glacière vide gros malin.",
+          "Hienghène mérite mieux, pas ta phrase en vrac portée par un coq de Païta sur le Caillou.",
+          "Yaté mérite mieux, pas ta phrase en vrac portée par un gecko au plafond et ça pique.",
+          "Canala mérite mieux, pas ta phrase en vrac portée par un barquette de roulotte sans chichi.",
+          "Thio mérite mieux, pas ta phrase en vrac portée par un cagou nerveux sec comme ça.",
+          "Poé mérite mieux, pas ta phrase en vrac portée par un crabe du récif façon brousse.",
+          "l îlot Maître mérite mieux, pas ta phrase en vrac portée par un tong humide avec le sel du lagon."
         ]
       },
       {
-        keywords: ["mal", "douleur", "blesse", "tape", "frappe", "calotte", "torgnole"],
-        replies: [
-          "Tu m'as fait mal là, putain ! Rien qu'en parlant quoi.",
-          "La calotte de tes morts arrive en express si tu forces là.",
+        "keywords": [
+          "lagon",
+          "mer",
+          "plage",
+          "anse vata",
+          "citron",
+          "citrons",
+          "ilot",
+          "îlot",
+          "recif",
+          "récif"
+        ],
+        "replies": [
+          "Le lagon près de Ouvéa est clair, ta logique est trouble comme une glacière oubliée par un gros zozo là.",
+          "Le lagon près de l île des Pins est clair, ta logique est trouble comme une glacière oubliée par un grand couillon du lagon quoi.",
+          "Le lagon près de Hienghène est clair, ta logique est trouble comme une glacière oubliée par un champion du n importe quoi mon vieux.",
+          "Le lagon près de Yaté est clair, ta logique est trouble comme une glacière oubliée par un touriste de ta propre idée gros malin.",
+          "Le lagon près de Canala est clair, ta logique est trouble comme une glacière oubliée par un pilote de brouette mentale sur le Caillou.",
+          "Le lagon près de Thio est clair, ta logique est trouble comme une glacière oubliée par un roi du rond-point et ça pique.",
+          "Le lagon près de Poé est clair, ta logique est trouble comme une glacière oubliée par un bulot du récif sans chichi.",
+          "Le lagon près de l îlot Maître est clair, ta logique est trouble comme une glacière oubliée par un chef de la gratte sec comme ça.",
+          "Le lagon près de Lifou est clair, ta logique est trouble comme une glacière oubliée par un génie en claquettes façon brousse.",
+          "Le lagon près de Maré est clair, ta logique est trouble comme une glacière oubliée par un maire de la confusion avec le sel du lagon."
         ]
       },
       {
-        keywords: ["amour", "aime", "coeur", "couple", "copine", "copain"],
-        replies: [
-          "L'amour ? Vieille folle, commence deja par aimer la ponctuation quoi.",
-          "Ton coeur fait le malin mais ton cerveau dort là.",
+        "keywords": [
+          "manger",
+          "faim",
+          "bouffe",
+          "cafe",
+          "café",
+          "repas",
+          "boire",
+          "bougna",
+          "poe",
+          "poé"
+        ],
+        "replies": [
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un pick-up sans frein là.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un ticket de Karuïa quoi.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un glacière vide mon vieux.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un coq de Païta gros malin.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un gecko au plafond sur le Caillou.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un barquette de roulotte et ça pique.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un cagou nerveux sans chichi.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un crabe du récif sec comme ça.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un tong humide façon brousse.",
+          "Respecte le bougna, avale ta honte et arrête de cuisiner des idées crues comme un niaouli sec avec le sel du lagon."
         ]
       },
       {
-        keywords: ["travail", "boss", "patron", "ecole", "cours", "devoir", "job"],
-        replies: [
-          "Bouge ton cul là ! Le travail ne va pas se faire en pleurant quoi.",
-          "Ton patron doit prier RFO pour comprendre ton planning là.",
+        "keywords": [
+          "travail",
+          "boss",
+          "patron",
+          "ecole",
+          "école",
+          "cours",
+          "devoir",
+          "job",
+          "bureau"
+        ],
+        "replies": [
+          "Bouge ton cul depuis Ducos, même le car de brousse bosse plus vite que ton cerveau de champion du n importe quoi là.",
+          "Bouge ton cul depuis Dumbéa, même le car de brousse bosse plus vite que ton cerveau de touriste de ta propre idée quoi.",
+          "Bouge ton cul depuis Païta, même le car de brousse bosse plus vite que ton cerveau de pilote de brouette mentale mon vieux.",
+          "Bouge ton cul depuis Tontouta, même le car de brousse bosse plus vite que ton cerveau de roi du rond-point gros malin.",
+          "Bouge ton cul depuis Bourail, même le car de brousse bosse plus vite que ton cerveau de bulot du récif sur le Caillou.",
+          "Bouge ton cul depuis La Foa, même le car de brousse bosse plus vite que ton cerveau de chef de la gratte et ça pique.",
+          "Bouge ton cul depuis Koné, même le car de brousse bosse plus vite que ton cerveau de génie en claquettes sans chichi.",
+          "Bouge ton cul depuis Koumac, même le car de brousse bosse plus vite que ton cerveau de maire de la confusion sec comme ça.",
+          "Bouge ton cul depuis Poindimié, même le car de brousse bosse plus vite que ton cerveau de gros zozo façon brousse.",
+          "Bouge ton cul depuis Nouméa, même le car de brousse bosse plus vite que ton cerveau de grand couillon du lagon avec le sel du lagon."
         ]
       },
       {
-        keywords: ["manger", "faim", "bouffe", "cafe", "repas", "boire"],
-        replies: [
-          "Tu as faim ? Mange ta honte d'abord, Gros poka là.",
-          "Bave pas la canne Pia sur la table, enculé quoi.",
+        "keywords": [
+          "amour",
+          "aime",
+          "aimer",
+          "coeur",
+          "cœur",
+          "couple",
+          "copine",
+          "copain",
+          "drague"
+        ],
+        "replies": [
+          "L amour à Hienghène c est joli, mais ta drague sent le ticket de Karuïa renversé dans le bus là.",
+          "L amour à Yaté c est joli, mais ta drague sent le glacière vide renversé dans le bus quoi.",
+          "L amour à Canala c est joli, mais ta drague sent le coq de Païta renversé dans le bus mon vieux.",
+          "L amour à Thio c est joli, mais ta drague sent le gecko au plafond renversé dans le bus gros malin.",
+          "L amour à Poé c est joli, mais ta drague sent le barquette de roulotte renversé dans le bus sur le Caillou.",
+          "L amour à l îlot Maître c est joli, mais ta drague sent le cagou nerveux renversé dans le bus et ça pique.",
+          "L amour à Lifou c est joli, mais ta drague sent le crabe du récif renversé dans le bus sans chichi.",
+          "L amour à Maré c est joli, mais ta drague sent le tong humide renversé dans le bus sec comme ça.",
+          "L amour à Ouvéa c est joli, mais ta drague sent le niaouli sec renversé dans le bus façon brousse.",
+          "L amour à l île des Pins c est joli, mais ta drague sent le pick-up sans frein renversé dans le bus avec le sel du lagon."
         ]
       },
       {
-        keywords: ["merci", "super", "bravo", "ok", "d'accord"],
-        replies: [
-          "Ouais c'est ca, merci mon vieux, maintenant bouge là.",
-          "Bravo quoi ? J'ai juste sauve ta phrase du naufrage.",
+        "keywords": [
+          "canal",
+          "satellite",
+          "tele",
+          "télé",
+          "tv",
+          "rfo",
+          "coco pilou",
+          "radio"
+        ],
+        "replies": [
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de touriste de ta propre idée là.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de pilote de brouette mentale quoi.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de roi du rond-point mon vieux.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de bulot du récif gros malin.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de chef de la gratte sur le Caillou.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de génie en claquettes et ça pique.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de maire de la confusion sans chichi.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de gros zozo sec comme ça.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de grand couillon du lagon façon brousse.",
+          "Ferme tes yeux et va regarder RFO, Coco Pilou captera plus vite que ton antenne mentale de champion du n importe quoi avec le sel du lagon."
         ]
       },
       {
-        keywords: ["insulte", "mechant", "calme", "gentil", "respect"],
-        replies: [
-          "Calme ? Ferme ta gueule, je suis ne en mode alarme là.",
-          "Le respect arrive quand la question tient debout quoi.",
+        "keywords": [
+          "merci",
+          "super",
+          "bravo",
+          "ok",
+          "d accord",
+          "daccord",
+          "yes",
+          "oui"
+        ],
+        "replies": [
+          "Ok depuis La Foa, tu viens de comprendre sans faire naufrage, miracle du glacière vide là.",
+          "Ok depuis Koné, tu viens de comprendre sans faire naufrage, miracle du coq de Païta quoi.",
+          "Ok depuis Koumac, tu viens de comprendre sans faire naufrage, miracle du gecko au plafond mon vieux.",
+          "Ok depuis Poindimié, tu viens de comprendre sans faire naufrage, miracle du barquette de roulotte gros malin.",
+          "Ok depuis Nouméa, tu viens de comprendre sans faire naufrage, miracle du cagou nerveux sur le Caillou.",
+          "Ok depuis Ducos, tu viens de comprendre sans faire naufrage, miracle du crabe du récif et ça pique.",
+          "Ok depuis Dumbéa, tu viens de comprendre sans faire naufrage, miracle du tong humide sans chichi.",
+          "Ok depuis Païta, tu viens de comprendre sans faire naufrage, miracle du niaouli sec sec comme ça.",
+          "Ok depuis Tontouta, tu viens de comprendre sans faire naufrage, miracle du pick-up sans frein façon brousse.",
+          "Ok depuis Bourail, tu viens de comprendre sans faire naufrage, miracle du ticket de Karuïa avec le sel du lagon."
         ]
       },
       {
-        keywords: ["partager", "whatsapp", "message", "texte", "copier"],
-        replies: [
-          "Partage ca vite, mon vieux, que WhatsApp souffre aussi là.",
-          "Envoie le clash avant que je coupe Canal Satellite quoi.",
+        "keywords": [
+          "insulte",
+          "mechant",
+          "méchant",
+          "calme",
+          "gentil",
+          "respect",
+          "poli"
+        ],
+        "replies": [
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le pilote de brouette mentale là.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le roi du rond-point quoi.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le bulot du récif mon vieux.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le chef de la gratte gros malin.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le génie en claquettes sur le Caillou.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le maire de la confusion et ça pique.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le gros zozo sans chichi.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le grand couillon du lagon sec comme ça.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le champion du n importe quoi façon brousse.",
+          "Je suis pas méchant, je suis franc comme soleil à Poé, et toi tu fais le touriste de ta propre idée avec le sel du lagon."
         ]
       },
       {
-        keywords: ["au revoir", "bye", "ciao", "a plus", "bonne nuit"],
-        replies: [
-          "Casse-toi proprement là, et ferme la porte quoi.",
-          "A plus mon vieux, reviens avec 100 francs pour le car là.",
+        "keywords": [
+          "partager",
+          "whatsapp",
+          "message",
+          "texte",
+          "copier",
+          "envoyer"
+        ],
+        "replies": [
+          "Envoie ça sur WhatsApp jusqu à Koné, que tout le monde voie comment le coq de Païta s est fait sécher là.",
+          "Envoie ça sur WhatsApp jusqu à Koumac, que tout le monde voie comment le gecko au plafond s est fait sécher quoi.",
+          "Envoie ça sur WhatsApp jusqu à Poindimié, que tout le monde voie comment le barquette de roulotte s est fait sécher mon vieux.",
+          "Envoie ça sur WhatsApp jusqu à Nouméa, que tout le monde voie comment le cagou nerveux s est fait sécher gros malin.",
+          "Envoie ça sur WhatsApp jusqu à Ducos, que tout le monde voie comment le crabe du récif s est fait sécher sur le Caillou.",
+          "Envoie ça sur WhatsApp jusqu à Dumbéa, que tout le monde voie comment le tong humide s est fait sécher et ça pique.",
+          "Envoie ça sur WhatsApp jusqu à Païta, que tout le monde voie comment le niaouli sec s est fait sécher sans chichi.",
+          "Envoie ça sur WhatsApp jusqu à Tontouta, que tout le monde voie comment le pick-up sans frein s est fait sécher sec comme ça.",
+          "Envoie ça sur WhatsApp jusqu à Bourail, que tout le monde voie comment le ticket de Karuïa s est fait sécher façon brousse.",
+          "Envoie ça sur WhatsApp jusqu à La Foa, que tout le monde voie comment le glacière vide s est fait sécher avec le sel du lagon."
+        ]
+      },
+      {
+        "keywords": [
+          "au revoir",
+          "bye",
+          "ciao",
+          "a plus",
+          "à plus",
+          "bonne nuit",
+          "tata"
+        ],
+        "replies": [
+          "Tata depuis Canala, pars proprement avant que la marée ramène ton bazar de roi du rond-point là.",
+          "Tata depuis Thio, pars proprement avant que la marée ramène ton bazar de bulot du récif quoi.",
+          "Tata depuis Poé, pars proprement avant que la marée ramène ton bazar de chef de la gratte mon vieux.",
+          "Tata depuis l îlot Maître, pars proprement avant que la marée ramène ton bazar de génie en claquettes gros malin.",
+          "Tata depuis Lifou, pars proprement avant que la marée ramène ton bazar de maire de la confusion sur le Caillou.",
+          "Tata depuis Maré, pars proprement avant que la marée ramène ton bazar de gros zozo et ça pique.",
+          "Tata depuis Ouvéa, pars proprement avant que la marée ramène ton bazar de grand couillon du lagon sans chichi.",
+          "Tata depuis l île des Pins, pars proprement avant que la marée ramène ton bazar de champion du n importe quoi sec comme ça.",
+          "Tata depuis Hienghène, pars proprement avant que la marée ramène ton bazar de touriste de ta propre idée façon brousse.",
+          "Tata depuis Yaté, pars proprement avant que la marée ramène ton bazar de pilote de brouette mentale avec le sel du lagon."
+        ]
+      },
+      {
+        "keywords": [
+          "meteo",
+          "météo",
+          "pluie",
+          "soleil",
+          "chaud",
+          "cyclone",
+          "vent",
+          "humide"
+        ],
+        "replies": [
+          "La météo de Koumac annonce danger, fort risque de connerie localisée autour de ton gecko au plafond là.",
+          "La météo de Poindimié annonce danger, fort risque de connerie localisée autour de ton barquette de roulotte quoi.",
+          "La météo de Nouméa annonce danger, fort risque de connerie localisée autour de ton cagou nerveux mon vieux.",
+          "La météo de Ducos annonce danger, fort risque de connerie localisée autour de ton crabe du récif gros malin.",
+          "La météo de Dumbéa annonce danger, fort risque de connerie localisée autour de ton tong humide sur le Caillou.",
+          "La météo de Païta annonce danger, fort risque de connerie localisée autour de ton niaouli sec et ça pique.",
+          "La météo de Tontouta annonce danger, fort risque de connerie localisée autour de ton pick-up sans frein sans chichi.",
+          "La météo de Bourail annonce danger, fort risque de connerie localisée autour de ton ticket de Karuïa sec comme ça.",
+          "La météo de La Foa annonce danger, fort risque de connerie localisée autour de ton glacière vide façon brousse.",
+          "La météo de Koné annonce danger, fort risque de connerie localisée autour de ton coq de Païta avec le sel du lagon."
+        ]
+      },
+      {
+        "keywords": [
+          "voiture",
+          "route",
+          "bus",
+          "car",
+          "rouler",
+          "parking",
+          "tontouta",
+          "aeroport",
+          "aéroport"
+        ],
+        "replies": [
+          "Ta phrase roule entre Païta et Tontouta, sans permis, sans frein, sans cerveau, vrai bulot du récif là.",
+          "Ta phrase roule entre Tontouta et Bourail, sans permis, sans frein, sans cerveau, vrai chef de la gratte quoi.",
+          "Ta phrase roule entre Bourail et La Foa, sans permis, sans frein, sans cerveau, vrai génie en claquettes mon vieux.",
+          "Ta phrase roule entre La Foa et Koné, sans permis, sans frein, sans cerveau, vrai maire de la confusion gros malin.",
+          "Ta phrase roule entre Koné et Koumac, sans permis, sans frein, sans cerveau, vrai gros zozo sur le Caillou.",
+          "Ta phrase roule entre Koumac et Poindimié, sans permis, sans frein, sans cerveau, vrai grand couillon du lagon et ça pique.",
+          "Ta phrase roule entre Poindimié et Nouméa, sans permis, sans frein, sans cerveau, vrai champion du n importe quoi sans chichi.",
+          "Ta phrase roule entre Nouméa et Ducos, sans permis, sans frein, sans cerveau, vrai touriste de ta propre idée sec comme ça.",
+          "Ta phrase roule entre Ducos et Dumbéa, sans permis, sans frein, sans cerveau, vrai pilote de brouette mentale façon brousse.",
+          "Ta phrase roule entre Dumbéa et Païta, sans permis, sans frein, sans cerveau, vrai roi du rond-point avec le sel du lagon."
+        ]
+      },
+      {
+        "keywords": [
+          "peur",
+          "stresse",
+          "stress",
+          "panique",
+          "fatigue",
+          "malade",
+          "triste"
+        ],
+        "replies": [
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un barquette de roulotte là.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un cagou nerveux quoi.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un crabe du récif mon vieux.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un tong humide gros malin.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un niaouli sec sur le Caillou.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un pick-up sans frein et ça pique.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un ticket de Karuïa sans chichi.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un glacière vide sec comme ça.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un coq de Païta façon brousse.",
+          "Respire un coup, t es pas face à un requin, juste face à ta phrase malade comme un gecko au plafond avec le sel du lagon."
+        ]
+      },
+      {
+        "keywords": [
+          "code",
+          "site",
+          "web",
+          "app",
+          "bug",
+          "ordinateur",
+          "mobile",
+          "internet"
+        ],
+        "replies": [
+          "Ton bug à Poindimié, fait plus de bruit qu un cagou nerveux, mais on va le coincer là.",
+          "Ton bug à Nouméa, fait plus de bruit qu un crabe du récif, mais on va le coincer quoi.",
+          "Ton bug à Ducos, fait plus de bruit qu un tong humide, mais on va le coincer mon vieux.",
+          "Ton bug à Dumbéa, fait plus de bruit qu un niaouli sec, mais on va le coincer gros malin.",
+          "Ton bug à Païta, fait plus de bruit qu un pick-up sans frein, mais on va le coincer sur le Caillou.",
+          "Ton bug à Tontouta, fait plus de bruit qu un ticket de Karuïa, mais on va le coincer et ça pique.",
+          "Ton bug à Bourail, fait plus de bruit qu un glacière vide, mais on va le coincer sans chichi.",
+          "Ton bug à La Foa, fait plus de bruit qu un coq de Païta, mais on va le coincer sec comme ça.",
+          "Ton bug à Koné, fait plus de bruit qu un gecko au plafond, mais on va le coincer façon brousse.",
+          "Ton bug à Koumac, fait plus de bruit qu un barquette de roulotte, mais on va le coincer avec le sel du lagon."
         ]
       }
     ];
 
     const randomReplies = [
-      "Gros poka, ta phrase a glisse dans le caniveau là.",
-      "Vieille folle, reformule avant que je distribue quoi.",
-      "Enculé ! Meme mon micro a recule en t'entendant là.",
-      "Mon vieux, t'as pas 100 francs pour le car là ? Je suis fatigue de marcher avec mon sac.",
-      "Ferme ta gueule deux secondes, je trie le chaos que tu viens d'envoyer quoi.",
-      "Tu m'as fait mal là, putain ! C'etait pas une question, c'etait un accident.",
-      "La calotte de tes morts sur cette idee molle là.",
-      "Tu vas prendre une bonne torgnole si tu appelles ca une demande quoi.",
-      "Ferme tes yeux et va regarder RFO, il y a Coco Pilou !",
-      "Je vais couper Canal Satellite pour toi, tu vas voir !",
+      "Gros poka de Nouméa, ta phrase a coulé comme un niaouli sec et ça pique.",
+      "Mon vieux de Maré, ta phrase a coulé comme un pick-up sans frein sans chichi.",
+      "Oh champion du n importe quoi, ta phrase a coulé comme un ticket de Karuïa sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, ta phrase a coulé comme un glacière vide façon brousse.",
+      "Bave pas la canne Pia à Tontouta, ta phrase a coulé comme un coq de Païta avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, ta phrase a coulé comme un gecko au plafond là.",
+      "La calotte verbale part de La Foa, ta phrase a coulé comme un barquette de roulotte quoi.",
+      "Ton plan a pris le mauvais car à Thio, ta phrase a coulé comme un cagou nerveux mon vieux.",
+      "Même le cagou de Koumac recule, ta phrase a coulé comme un crabe du récif gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, ta phrase a coulé comme un tong humide sur le Caillou.",
+      "Gros poka de Nouméa, tu fais plus de bruit qu un niaouli sec mais zéro contenu et ça pique.",
+      "Mon vieux de Maré, tu fais plus de bruit qu un pick-up sans frein mais zéro contenu sans chichi.",
+      "Oh champion du n importe quoi, tu fais plus de bruit qu un ticket de Karuïa mais zéro contenu sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, tu fais plus de bruit qu un glacière vide mais zéro contenu façon brousse.",
+      "Bave pas la canne Pia à Tontouta, tu fais plus de bruit qu un coq de Païta mais zéro contenu avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, tu fais plus de bruit qu un gecko au plafond mais zéro contenu là.",
+      "La calotte verbale part de La Foa, tu fais plus de bruit qu un barquette de roulotte mais zéro contenu quoi.",
+      "Ton plan a pris le mauvais car à Thio, tu fais plus de bruit qu un cagou nerveux mais zéro contenu mon vieux.",
+      "Même le cagou de Koumac recule, tu fais plus de bruit qu un crabe du récif mais zéro contenu gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, tu fais plus de bruit qu un tong humide mais zéro contenu sur le Caillou.",
+      "Gros poka de Nouméa, ton raisonnement part en piste rouge sans roue et ça pique.",
+      "Mon vieux de Maré, ton raisonnement part en piste rouge sans roue sans chichi.",
+      "Oh champion du n importe quoi, ton raisonnement part en piste rouge sans roue sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, ton raisonnement part en piste rouge sans roue façon brousse.",
+      "Bave pas la canne Pia à Tontouta, ton raisonnement part en piste rouge sans roue avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, ton raisonnement part en piste rouge sans roue là.",
+      "La calotte verbale part de La Foa, ton raisonnement part en piste rouge sans roue quoi.",
+      "Ton plan a pris le mauvais car à Thio, ton raisonnement part en piste rouge sans roue mon vieux.",
+      "Même le cagou de Koumac recule, ton raisonnement part en piste rouge sans roue gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, ton raisonnement part en piste rouge sans roue sur le Caillou.",
+      "Gros poka de Nouméa, ton idée flotte ventre en l air devant le récif et ça pique.",
+      "Mon vieux de Maré, ton idée flotte ventre en l air devant le récif sans chichi.",
+      "Oh champion du n importe quoi, ton idée flotte ventre en l air devant le récif sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, ton idée flotte ventre en l air devant le récif façon brousse.",
+      "Bave pas la canne Pia à Tontouta, ton idée flotte ventre en l air devant le récif avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, ton idée flotte ventre en l air devant le récif là.",
+      "La calotte verbale part de La Foa, ton idée flotte ventre en l air devant le récif quoi.",
+      "Ton plan a pris le mauvais car à Thio, ton idée flotte ventre en l air devant le récif mon vieux.",
+      "Même le cagou de Koumac recule, ton idée flotte ventre en l air devant le récif gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, ton idée flotte ventre en l air devant le récif sur le Caillou.",
+      "Gros poka de Nouméa, tu confonds répondant et brouhaha de marché et ça pique.",
+      "Mon vieux de Maré, tu confonds répondant et brouhaha de marché sans chichi.",
+      "Oh champion du n importe quoi, tu confonds répondant et brouhaha de marché sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, tu confonds répondant et brouhaha de marché façon brousse.",
+      "Bave pas la canne Pia à Tontouta, tu confonds répondant et brouhaha de marché avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, tu confonds répondant et brouhaha de marché là.",
+      "La calotte verbale part de La Foa, tu confonds répondant et brouhaha de marché quoi.",
+      "Ton plan a pris le mauvais car à Thio, tu confonds répondant et brouhaha de marché mon vieux.",
+      "Même le cagou de Koumac recule, tu confonds répondant et brouhaha de marché gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, tu confonds répondant et brouhaha de marché sur le Caillou.",
+      "Gros poka de Nouméa, ton cerveau cherche l alizé et trouve un ventilateur cassé et ça pique.",
+      "Mon vieux de Maré, ton cerveau cherche l alizé et trouve un ventilateur cassé sans chichi.",
+      "Oh champion du n importe quoi, ton cerveau cherche l alizé et trouve un ventilateur cassé sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, ton cerveau cherche l alizé et trouve un ventilateur cassé façon brousse.",
+      "Bave pas la canne Pia à Tontouta, ton cerveau cherche l alizé et trouve un ventilateur cassé avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, ton cerveau cherche l alizé et trouve un ventilateur cassé là.",
+      "La calotte verbale part de La Foa, ton cerveau cherche l alizé et trouve un ventilateur cassé quoi.",
+      "Ton plan a pris le mauvais car à Thio, ton cerveau cherche l alizé et trouve un ventilateur cassé mon vieux.",
+      "Même le cagou de Koumac recule, ton cerveau cherche l alizé et trouve un ventilateur cassé gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, ton cerveau cherche l alizé et trouve un ventilateur cassé sur le Caillou.",
+      "Gros poka de Nouméa, même RFO ne veut pas programmer ce bazar et ça pique.",
+      "Mon vieux de Maré, même RFO ne veut pas programmer ce bazar sans chichi.",
+      "Oh champion du n importe quoi, même RFO ne veut pas programmer ce bazar sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, même RFO ne veut pas programmer ce bazar façon brousse.",
+      "Bave pas la canne Pia à Tontouta, même RFO ne veut pas programmer ce bazar avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, même RFO ne veut pas programmer ce bazar là.",
+      "La calotte verbale part de La Foa, même RFO ne veut pas programmer ce bazar quoi.",
+      "Ton plan a pris le mauvais car à Thio, même RFO ne veut pas programmer ce bazar mon vieux.",
+      "Même le cagou de Koumac recule, même RFO ne veut pas programmer ce bazar gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, même RFO ne veut pas programmer ce bazar sur le Caillou.",
+      "Gros poka de Nouméa, ton explication gratte comme moustique de mangrove et ça pique.",
+      "Mon vieux de Maré, ton explication gratte comme moustique de mangrove sans chichi.",
+      "Oh champion du n importe quoi, ton explication gratte comme moustique de mangrove sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, ton explication gratte comme moustique de mangrove façon brousse.",
+      "Bave pas la canne Pia à Tontouta, ton explication gratte comme moustique de mangrove avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, ton explication gratte comme moustique de mangrove là.",
+      "La calotte verbale part de La Foa, ton explication gratte comme moustique de mangrove quoi.",
+      "Ton plan a pris le mauvais car à Thio, ton explication gratte comme moustique de mangrove mon vieux.",
+      "Même le cagou de Koumac recule, ton explication gratte comme moustique de mangrove gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, ton explication gratte comme moustique de mangrove sur le Caillou.",
+      "Gros poka de Nouméa, ta dignité demande un ticket retour et ça pique.",
+      "Mon vieux de Maré, ta dignité demande un ticket retour sans chichi.",
+      "Oh champion du n importe quoi, ta dignité demande un ticket retour sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, ta dignité demande un ticket retour façon brousse.",
+      "Bave pas la canne Pia à Tontouta, ta dignité demande un ticket retour avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, ta dignité demande un ticket retour là.",
+      "La calotte verbale part de La Foa, ta dignité demande un ticket retour quoi.",
+      "Ton plan a pris le mauvais car à Thio, ta dignité demande un ticket retour mon vieux.",
+      "Même le cagou de Koumac recule, ta dignité demande un ticket retour gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, ta dignité demande un ticket retour sur le Caillou.",
+      "Gros poka de Nouméa, ta logique prend le wharf sans savoir nager et ça pique.",
+      "Mon vieux de Maré, ta logique prend le wharf sans savoir nager sans chichi.",
+      "Oh champion du n importe quoi, ta logique prend le wharf sans savoir nager sec comme ça.",
+      "Depuis l île des Pins, même le lagon dit stop, ta logique prend le wharf sans savoir nager façon brousse.",
+      "Bave pas la canne Pia à Tontouta, ta logique prend le wharf sans savoir nager avec le sel du lagon.",
+      "Je sens la gratte depuis Yaté, ta logique prend le wharf sans savoir nager là.",
+      "La calotte verbale part de La Foa, ta logique prend le wharf sans savoir nager quoi.",
+      "Ton plan a pris le mauvais car à Thio, ta logique prend le wharf sans savoir nager mon vieux.",
+      "Même le cagou de Koumac recule, ta logique prend le wharf sans savoir nager gros malin.",
+      "Ferme tes yeux à l îlot Maître et écoute, ta logique prend le wharf sans savoir nager sur le Caillou."
     ];
+
+    const responseBankSize = replyBank.reduce((total, group) => total + group.replies.length, 0) + randomReplies.length;
+    if (responseBankSize !== 300) {
+      console.warn("Taz-Bot attend 300 réponses calédoniennes, banque actuelle: " + responseBankSize);
+    }
 
     let recognition;
     let isListening = false;
@@ -337,14 +799,15 @@
 
       const questionLike = /\?$|\b(comment|pourquoi|quoi|qui|ou|quand|combien|peux|est ce que)\b/.test(normalized);
       if (questionLike && Math.random() < 0.34) {
-        return "Hé mon frère, t'as pas 100 francs pour le car là ? Je suis fatigue de marcher avec mon sac.";
+        const dodgeReplies = replyBank.find((group) => group.keywords.includes("question"))?.replies || randomReplies;
+        return pickRandom(dodgeReplies);
       }
 
       if (matchedGroup) {
         return pickRandom(matchedGroup.replies);
       }
 
-      return Math.random() < 0.24 ? pickRandom(fallbackLines) : pickRandom(randomReplies);
+      return pickRandom(randomReplies);
     }
 
     function setState(mode, label) {
