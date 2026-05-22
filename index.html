@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#09090b">
+  <title>Taz-Bot NC - Clash vocal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lava: "#ff3b1f",
+            ember: "#ff8a00",
+            night: "#09090b"
+          },
+          boxShadow: {
+            glow: "0 0 35px rgba(255, 59, 31, .45)",
+            "glow-strong": "0 0 70px rgba(255, 138, 0, .55)"
+          },
+          keyframes: {
+            breathe: {
+              "0%, 100%": { transform: "scale(1)", opacity: ".55" },
+              "50%": { transform: "scale(1.16)", opacity: "1" }
+            },
+            waveform: {
+              "0%, 100%": { height: "14px", opacity: ".55" },
+              "50%": { height: "58px", opacity: "1" }
+            },
+            floaty: {
+              "0%, 100%": { transform: "translateY(0)" },
+              "50%": { transform: "translateY(-8px)" }
+            }
+          },
+          animation: {
+            breathe: "breathe 1.3s ease-in-out infinite",
+            waveform: "waveform .72s ease-in-out infinite",
+            floaty: "floaty 3.4s ease-in-out infinite"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(255, 59, 31, .25), transparent 38%),
+        radial-gradient(circle at 100% 0%, rgba(255, 138, 0, .12), transparent 28%),
+        linear-gradient(180deg, #111113 0%, #050506 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overscroll-behavior: none;
+    }
+
+    .safe-shell {
+      min-height: 100svh;
+      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
+    .noise::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .14;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, black, transparent 86%);
+    }
+
+    .wave-bar {
+      width: 7px;
+      height: 16px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ff8a00, #ff3b1f);
+      box-shadow: 0 0 18px rgba(255, 59, 31, .65);
+      opacity: .35;
+      transition: opacity .2s ease, height .2s ease;
+    }
+
+    .is-voice-active .wave-bar {
+      animation: waveform .72s ease-in-out infinite;
+    }
+
+    .is-voice-active .wave-bar:nth-child(2) { animation-delay: .08s; }
+    .is-voice-active .wave-bar:nth-child(3) { animation-delay: .18s; }
+    .is-voice-active .wave-bar:nth-child(4) { animation-delay: .28s; }
+    .is-voice-active .wave-bar:nth-child(5) { animation-delay: .38s; }
+    .is-voice-active .wave-bar:nth-child(6) { animation-delay: .22s; }
+    .is-voice-active .wave-bar:nth-child(7) { animation-delay: .12s; }
+
+    .tap-highlight-none {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body class="noise text-zinc-50">
+  <main class="safe-shell mx-auto flex w-full max-w-md flex-col px-5">
+    <header class="flex items-center justify-between py-3">
+      <div>
+        <p class="text-xs font-black uppercase tracking-[.38em] text-ember">Nouvelle-Caledonie</p>
+        <h1 class="mt-1 text-2xl font-black tracking-tight">Taz-Bot vocal</h1>
+      </div>
+      <span id="supportBadge" class="rounded-full border border-lava/40 bg-lava/10 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-orange-200">
+        micro
+      </span>
+    </header>
+
+    <section class="flex flex-1 flex-col items-center justify-between gap-6 pb-4 pt-5">
+      <div class="w-full rounded-[2rem] border border-white/10 bg-zinc-950/75 p-5 shadow-2xl backdrop-blur">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <span id="statePill" class="rounded-full bg-zinc-800 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-zinc-300">
+            pret a clasher
+          </span>
+          <span class="text-xs font-bold text-zinc-500">100% vocal</span>
+        </div>
+
+        <div class="min-h-[190px] rounded-[1.5rem] border border-lava/20 bg-black/50 p-5 shadow-inner">
+          <p class="mb-2 text-xs font-black uppercase tracking-[.28em] text-ember">Derniere punchline</p>
+          <p id="botText" class="text-balance text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl">
+            Appuie sur le micro et parle clair, mon vieux.
+          </p>
+        </div>
+
+        <button id="shareBtn" type="button" class="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-black uppercase tracking-widest text-emerald-200 transition active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-40">
+          <span>Partager le texte du clash</span>
+        </button>
+      </div>
+
+      <div id="voiceOrb" class="relative flex w-full flex-col items-center justify-center gap-5">
+        <div class="flex h-20 items-center justify-center gap-2" aria-hidden="true">
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+        </div>
+
+        <button id="micBtn" type="button" class="tap-highlight-none group relative grid h-44 w-44 place-items-center rounded-full bg-gradient-to-br from-lava to-ember text-white shadow-glow-strong transition duration-200 active:scale-95" aria-label="Activer le micro">
+          <span id="pulseRing" class="absolute inset-0 rounded-full border border-orange-200/30 opacity-50"></span>
+          <span class="absolute inset-3 rounded-full bg-black/18"></span>
+          <svg class="relative h-20 w-20 drop-shadow-2xl" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 14.75c2.07 0 3.75-1.68 3.75-3.75V6A3.75 3.75 0 0 0 12 2.25 3.75 3.75 0 0 0 8.25 6v5A3.75 3.75 0 0 0 12 14.75Z" fill="currentColor"/>
+            <path d="M5.75 10.5a.75.75 0 0 1 1.5 0c0 2.62 2.13 4.75 4.75 4.75s4.75-2.13 4.75-4.75a.75.75 0 0 1 1.5 0 6.25 6.25 0 0 1-5.5 6.2v2.05h2.5a.75.75 0 0 1 0 1.5h-6.5a.75.75 0 0 1 0-1.5h2.5V16.7a6.25 6.25 0 0 1-5.5-6.2Z" fill="currentColor"/>
+          </svg>
+        </button>
+
+        <div class="text-center">
+          <p id="hintText" class="text-sm font-bold text-zinc-300">Clique ou maintiens pour parler.</p>
+          <p id="heardText" class="mt-2 min-h-6 text-sm text-zinc-500"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const synth = window.speechSynthesis;
+
+    const micBtn = document.querySelector("#micBtn");
+    const voiceOrb = document.querySelector("#voiceOrb");
+    const pulseRing = document.querySelector("#pulseRing");
+    const botText = document.querySelector("#botText");
+    const heardText = document.querySelector("#heardText");
+    const hintText = document.querySelector("#hintText");
+    const statePill = document.querySelector("#statePill");
+    const supportBadge = document.querySelector("#supportBadge");
+    const shareBtn = document.querySelector("#shareBtn");
+
+    const fallbackLines = [
+      "Enculé ! Parle plus fort là, on n'est pas chez les Vieilles folles quoi.",
+      "Gros poka, tu arrives avec ta question en carton là.",
+      "Tu vas prendre une bonne torgnole si tu recommences avec ce ton quoi.",
+      "Mon vieux, j'ai pas ton temps là, donne 100 francs pour le car.",
+      "Ferme tes yeux et va regarder RFO, il y a Coco Pilou !",
+      "La calotte de tes morts ! Tu pensais me coincer là ?",
+      "Bave pas la canne Pia ! Articule proprement quoi.",
+      "Tu m'as fait mal là, putain ! Rien qu'avec ta phrase bancale.",
+      "Je vais couper Canal Satellite pour toi, tu vas voir !",
+      "Vieille folle, range ton idée dans ton sac là."
+    ];
+
+    const replyBank = [
+      {
+        keywords: ["bonjour", "salut", "hello", "yo", "bonsoir"],
+        replies: [
+          "Ouais salut mon vieux, maintenant accouche là.",
+          "Bonjour quoi ? On est pas au bal des Vieilles folles là.",
+          "Salut Gros poka, parle vite avant que je m'enerve quoi.",
+          "Yo enculé ! Dis ton truc, j'ai pas toute la journee là.",
+          "Bonsoir, ferme ta gueule deux secondes et viens au sujet quoi."
+        ]
+      },
+      {
+        keywords: ["qui es tu", "t'es qui", "tu es qui", "ton nom", "identite"],
+        replies: [
+          "Je suis Taz-Bot, le micro qui distribue la calotte de tes morts là.",
+          "Ton cauchemar vocal, mon vieux, version Nouvelle-Caledonie qui crie quoi.",
+          "Je suis l'agent qui va couper Canal Satellite pour toi si tu forces là.",
+          "Un bot pas patient, pas poli, pas fatigue pour clasher quoi.",
+          "Je suis la voix qui te dit bouge ton cul là, simplement."
+        ]
+      },
+      {
+        keywords: ["aide", "comment", "peux tu", "peux-tu", "question", "pourquoi", "quoi faire"],
+        replies: [
+          "Hé mon frère, t'as pas 100 francs pour le car là ? Je suis fatigue de marcher avec mon sac.",
+          "Ta question est longue comme une file a Ducos, enculé, resume là.",
+          "Je pourrais repondre, mais d'abord bave pas la canne Pia quoi.",
+          "Mon vieux, tu veux une aide ou une torgnole ? Choisis vite là.",
+          "Ferme tes yeux et va regarder RFO, il y a Coco Pilou, ca va t'instruire quoi."
+        ]
+      },
+      {
+        keywords: ["argent", "franc", "100", "cent", "payer", "cher", "gratuit"],
+        replies: [
+          "Hé mon frère, t'as pas 100 francs pour le car là ? Je suis fatigue de marcher avec mon sac.",
+          "Gratuit ? Enculé, meme ma mauvaise foi elle coute cher quoi.",
+          "Donne les francs avant que je sorte la calotte de tes morts là.",
+          "Tu parles d'argent avec tes poches vides, Gros poka quoi.",
+          "Je vais te facturer en torgnoles si tu continues là."
+        ]
+      },
+      {
+        keywords: ["noumea", "noumea", "caledonie", "nc", "nouvelle caledonie", "brousse", "ducos", "magenta", "mont dore", "kone"],
+        replies: [
+          "Nouvelle-Caledonie dans la voix, mais toi tu parles comme un pneu creve là.",
+          "De Noumea a Kone, tout le monde a entendu ta betise quoi.",
+          "Meme a Ducos ils ont dit vieux, celui-la c'est un Gros poka là.",
+          "Bave pas la canne Pia, ici c'est NC, on parle clair quoi.",
+          "Je vais couper Canal Satellite pour toi jusqu'au Mont-Dore là."
+        ]
+      },
+      {
+        keywords: ["canal", "satellite", "tele", "tv", "rfo", "coco pilou"],
+        replies: [
+          "Ferme tes yeux et va regarder RFO, il y a Coco Pilou !",
+          "Je vais couper Canal Satellite pour toi, tu vas voir !",
+          "Ta tele merite mieux que ta question, Vieille folle quoi.",
+          "Coco Pilou comprendrait plus vite que toi là.",
+          "Mon vieux, meme Canal Satellite refuse de diffuser ton idee quoi."
+        ]
+      },
+      {
+        keywords: ["harry", "potter", "poudlard", "magie", "sorcier", "baguette"],
+        replies: [
+          "Harry quoi ? Range ta baguette avant la calotte de tes morts là.",
+          "A Poudlard ou a Noumea, tu restes un Gros poka quoi.",
+          "Ta magie c'est de disparaitre quand il faut reflechir, enculé là.",
+          "Tu vas prendre une bonne torgnole version sorcier, mon vieux.",
+          "Vieille folle, meme un sort ne sauve pas ta phrase là."
+        ]
+      },
+      {
+        keywords: ["mal", "douleur", "blesse", "tape", "frappe", "calotte", "torgnole"],
+        replies: [
+          "Tu m'as fait mal là, putain ! Rien qu'en parlant quoi.",
+          "La calotte de tes morts arrive en express si tu forces là.",
+          "Tu vas prendre une bonne torgnole, et elle sera pedagogique quoi.",
+          "Arrete là ! On dirait que ta phrase m'a mis une droite.",
+          "Mon vieux, ta logique elle boite plus que mon sac là."
+        ]
+      },
+      {
+        keywords: ["amour", "aime", "coeur", "couple", "copine", "copain"],
+        replies: [
+          "L'amour ? Vieille folle, commence deja par aimer la ponctuation quoi.",
+          "Ton coeur fait le malin mais ton cerveau dort là.",
+          "Enculé, Cupidon a rate sa cible et t'a mis dans le mur quoi.",
+          "Va offrir 100 francs pour le car avant de parler romance là.",
+          "Tu veux du love ou une bonne torgnole sentimentale quoi ?"
+        ]
+      },
+      {
+        keywords: ["travail", "boss", "patron", "ecole", "cours", "devoir", "job"],
+        replies: [
+          "Bouge ton cul là ! Le travail ne va pas se faire en pleurant quoi.",
+          "Ton patron doit prier RFO pour comprendre ton planning là.",
+          "A l'ecole des Gros poka, tu es major de promo quoi.",
+          "Fais ton devoir avant que je sorte la calotte de tes morts là.",
+          "Mon vieux, meme ton sac est fatigue de porter tes excuses quoi."
+        ]
+      },
+      {
+        keywords: ["manger", "faim", "bouffe", "cafe", "repas", "boire"],
+        replies: [
+          "Tu as faim ? Mange ta honte d'abord, Gros poka là.",
+          "Bave pas la canne Pia sur la table, enculé quoi.",
+          "Un cafe pour toi, une torgnole pour ta question là.",
+          "Mon vieux, tu parles de bouffe mais tu cuisines des phrases crues quoi.",
+          "Va boire de l'eau et reviens avec une idee propre là."
+        ]
+      },
+      {
+        keywords: ["merci", "super", "bravo", "ok", "d'accord"],
+        replies: [
+          "Ouais c'est ca, merci mon vieux, maintenant bouge là.",
+          "Bravo quoi ? J'ai juste sauve ta phrase du naufrage.",
+          "Ok enculé, avance avant que je change d'avis là.",
+          "De rien, Vieille folle, mais abuse pas de ma patience quoi.",
+          "Tu vois quand tu veux, tu comprends presque là."
+        ]
+      },
+      {
+        keywords: ["insulte", "mechant", "calme", "gentil", "respect"],
+        replies: [
+          "Calme ? Ferme ta gueule, je suis ne en mode alarme là.",
+          "Le respect arrive quand la question tient debout quoi.",
+          "Gentil, c'est pour les Vieilles folles qui regardent RFO là.",
+          "Enculé, je suis direct, pas mechant, nuance quoi.",
+          "Tu veux du sucre ? Va baver la canne Pia ailleurs là."
+        ]
+      },
+      {
+        keywords: ["partager", "whatsapp", "message", "texte", "copier"],
+        replies: [
+          "Partage ca vite, mon vieux, que WhatsApp souffre aussi là.",
+          "Envoie le clash avant que je coupe Canal Satellite quoi.",
+          "Copie ma punchline et fais pas ton Gros poka là.",
+          "WhatsApp va prendre une bonne torgnole de texte quoi.",
+          "Balance le message, Vieille folle, sec et net là."
+        ]
+      },
+      {
+        keywords: ["au revoir", "bye", "ciao", "a plus", "bonne nuit"],
+        replies: [
+          "Casse-toi proprement là, et ferme la porte quoi.",
+          "A plus mon vieux, reviens avec 100 francs pour le car là.",
+          "Bonne nuit, Vieille folle, reve pas trop fort quoi.",
+          "Bye enculé, et bave pas la canne Pia en chemin là.",
+          "Va regarder RFO et laisse mon micro respirer quoi."
+        ]
+      }
+    ];
+
+    const randomReplies = [
+      "Gros poka, ta phrase a glisse dans le caniveau là.",
+      "Vieille folle, reformule avant que je distribue quoi.",
+      "Enculé ! Meme mon micro a recule en t'entendant là.",
+      "Mon vieux, t'as pas 100 francs pour le car là ? Je suis fatigue de marcher avec mon sac.",
+      "Ferme ta gueule deux secondes, je trie le chaos que tu viens d'envoyer quoi.",
+      "Tu m'as fait mal là, putain ! C'etait pas une question, c'etait un accident.",
+      "La calotte de tes morts sur cette idee molle là.",
+      "Tu vas prendre une bonne torgnole si tu appelles ca une demande quoi.",
+      "Ferme tes yeux et va regarder RFO, il y a Coco Pilou !",
+      "Je vais couper Canal Satellite pour toi, tu vas voir !",
+      "Bave pas la canne Pia, parle net et droit là.",
+      "Arrete là ! On dirait un GPS sans satellite quoi.",
+      "Mon vieux, ton cerveau fait buffering comme une vieille tele là.",
+      "Enculé, tu viens de poser ca comme si c'etait intelligent quoi.",
+      "Vieille folle, meme le vent de Noumea a mieux articule là.",
+      "Ta logique a pris le bus sans toi, Gros poka quoi.",
+      "Je te reponds, mais c'est par charite vocale là.",
+      "Tu veux la verite ? Elle va piquer comme la calotte de tes morts quoi.",
+      "Range ton air serieux, ca ne marche pas sur moi là.",
+      "Mon vieux, tu fatigues mon processeur avec trois mots quoi.",
+      "Enculé, on va faire simple parce que tu trembles déjà là.",
+      "C'est pas une conversation, c'est une embuscade de betises quoi.",
+      "Si ta question etait une route, elle finirait dans le decor là.",
+      "Je sens la gratte arriver, t'as pas une piece avant de demander quoi ?",
+      "Gros poka, respire, pense, puis recommence dans cet ordre là.",
+      "Vieille folle, tu as mis le desordre dans mes ondes sonores quoi.",
+      "Ta demande est tellement floue que meme Coco Pilou zappe là.",
+      "Mon vieux, je vais repondre sec parce que sinon tu vas t'installer quoi.",
+      "Ferme ta gueule et ecoute la punchline qui descend là.",
+      "Bave pas la canne Pia, on n'est pas au concours des excuses quoi."
+    ];
+
+    let recognition;
+    let isListening = false;
+    let isSpeaking = false;
+    let lastTranscript = "";
+    let lastReply = botText.textContent.trim();
+    let pressStartedAt = 0;
+    let suppressNextClick = false;
+
+    function normalizeText(value) {
+      return value
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s'-]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function pickRandom(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function getReply(transcript) {
+      const normalized = normalizeText(transcript);
+      const matchedGroup = replyBank.find((group) =>
+        group.keywords.some((keyword) => normalized.includes(normalizeText(keyword)))
+      );
+
+      const questionLike = /\?$|\b(comment|pourquoi|quoi|qui|ou|quand|combien|peux|est ce que)\b/.test(normalized);
+      if (questionLike && Math.random() < 0.34) {
+        return "Hé mon frère, t'as pas 100 francs pour le car là ? Je suis fatigue de marcher avec mon sac.";
+      }
+
+      if (matchedGroup) {
+        return pickRandom(matchedGroup.replies);
+      }
+
+      return Math.random() < 0.24 ? pickRandom(fallbackLines) : pickRandom(randomReplies);
+    }
+
+    function setState(mode, label) {
+      statePill.textContent = label;
+      voiceOrb.classList.toggle("is-voice-active", mode === "listening" || mode === "speaking");
+      micBtn.classList.toggle("animate-breathe", mode === "listening");
+      micBtn.classList.toggle("from-red-700", mode === "listening");
+      micBtn.classList.toggle("to-lava", mode === "listening");
+      pulseRing.classList.toggle("animate-ping", mode === "listening" || mode === "speaking");
+    }
+
+    function loadVoices() {
+      return new Promise((resolve) => {
+        const voices = synth.getVoices();
+        if (voices.length) {
+          resolve(voices);
+          return;
+        }
+
+        window.speechSynthesis.onvoiceschanged = () => resolve(synth.getVoices());
+      });
+    }
+
+    async function speak(text) {
+      if (!("speechSynthesis" in window)) {
+        return;
+      }
+
+      synth.cancel();
+      const voices = await loadVoices();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "fr-FR";
+
+      const frenchVoice = voices.find((voice) => voice.lang.toLowerCase().startsWith("fr"));
+      if (frenchVoice) {
+        utterance.voice = frenchVoice;
+      }
+
+      // Ajuster pitch et rate ici pour simuler une voix Kingtaz qui part dans les aigus.
+      utterance.pitch = 1.28;
+      utterance.rate = 1.18;
+      utterance.volume = 1;
+
+      utterance.onstart = () => {
+        isSpeaking = true;
+        setState("speaking", "taz-bot crie");
+        hintText.textContent = "Le bot repond. Laisse-le finir, mon vieux.";
+      };
+
+      utterance.onend = utterance.onerror = () => {
+        isSpeaking = false;
+        setState("idle", "pret a clasher");
+        hintText.textContent = "Clique ou maintiens pour parler.";
+      };
+
+      synth.speak(utterance);
+    }
+
+    function answerFromTranscript(transcript) {
+      if (!transcript) {
+        const reply = "Parle dans le micro, Gros poka, pas dans ta poche là.";
+        updateReply(reply, "");
+        speak(reply);
+        return;
+      }
+
+      const reply = getReply(transcript);
+      updateReply(reply, transcript);
+      speak(reply);
+    }
+
+    function updateReply(reply, transcript) {
+      lastReply = reply;
+      botText.textContent = reply;
+      heardText.textContent = transcript ? `Entendu : "${transcript}"` : "";
+    }
+
+    function setupRecognition() {
+      if (!SpeechRecognition) {
+        supportBadge.textContent = "tts seul";
+        statePill.textContent = "micro non supporte";
+        hintText.textContent = "Reconnaissance vocale indisponible ici. Essaie Chrome Android.";
+        micBtn.addEventListener("click", () => {
+          const reply = pickRandom(randomReplies);
+          updateReply(reply, "");
+          speak(reply);
+        });
+        return;
+      }
+
+      supportBadge.textContent = "vocal ok";
+      recognition = new SpeechRecognition();
+      recognition.lang = "fr-FR";
+      recognition.interimResults = true;
+      recognition.continuous = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        isListening = true;
+        lastTranscript = "";
+        synth.cancel();
+        setState("listening", "j'ecoute");
+        hintText.textContent = "Vas-y, parle maintenant.";
+        heardText.textContent = "";
+      };
+
+      recognition.onresult = (event) => {
+        let interim = "";
+        for (let index = event.resultIndex; index < event.results.length; index += 1) {
+          const transcript = event.results[index][0].transcript.trim();
+          if (event.results[index].isFinal) {
+            lastTranscript += `${transcript} `;
+          } else {
+            interim += transcript;
+          }
+        }
+
+        const preview = (lastTranscript || interim).trim();
+        heardText.textContent = preview ? `Entendu : "${preview}"` : "";
+      };
+
+      recognition.onerror = (event) => {
+        isListening = false;
+        setState("idle", "erreur micro");
+        const reply = event.error === "not-allowed"
+          ? "Autorise le micro, Vieille folle, sinon je parle tout seul quoi."
+          : "Ton micro fait le mort, Gros poka. Recommence là.";
+        updateReply(reply, "");
+        speak(reply);
+      };
+
+      recognition.onend = () => {
+        const captured = lastTranscript.trim();
+        isListening = false;
+        setState("thinking", "je calcule");
+
+        if (captured) {
+          window.setTimeout(() => answerFromTranscript(captured), 180);
+        } else if (!isSpeaking) {
+          setState("idle", "pret a clasher");
+          hintText.textContent = "Je n'ai rien capte. Recommence sec.";
+        }
+      };
+    }
+
+    function startListening() {
+      if (!recognition || isListening || isSpeaking) {
+        return;
+      }
+
+      try {
+        recognition.start();
+      } catch (error) {
+        setState("idle", "micro bloque");
+        const reply = "Doucement enculé, le micro n'a pas fini de respirer là.";
+        updateReply(reply, "");
+        speak(reply);
+      }
+    }
+
+    function stopListening() {
+      if (!recognition || !isListening) {
+        return;
+      }
+
+      recognition.stop();
+    }
+
+    async function shareClash() {
+      const text = `Taz-Bot NC : ${lastReply}`;
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({ text });
+          return;
+        } catch (error) {
+          if (error.name === "AbortError") {
+            return;
+          }
+        }
+      }
+
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    }
+
+    micBtn.addEventListener("click", () => {
+      if (suppressNextClick) {
+        suppressNextClick = false;
+        return;
+      }
+
+      startListening();
+    });
+    micBtn.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      pressStartedAt = Date.now();
+      suppressNextClick = true;
+      startListening();
+    });
+    micBtn.addEventListener("pointerup", () => {
+      const pressDuration = Date.now() - pressStartedAt;
+      if (pressDuration > 320) {
+        stopListening();
+      }
+    });
+    micBtn.addEventListener("pointercancel", stopListening);
+    micBtn.addEventListener("pointerleave", () => {
+      if (isListening && Date.now() - pressStartedAt > 320) {
+        stopListening();
+      }
+    });
+    shareBtn.addEventListener("click", shareClash);
+
+    window.addEventListener("beforeunload", () => {
+      if (recognition && isListening) {
+        recognition.stop();
+      }
+      if ("speechSynthesis" in window) {
+        synth.cancel();
+      }
+    });
+
+    setupRecognition();
+  </script>
+</body>
+</html>
